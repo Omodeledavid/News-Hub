@@ -1,0 +1,427 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>King News Hub</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+            color: #333;
+            line-height: 1.6;
+        }
+
+        header {
+            background-color: #333;
+            color: #fff;
+            padding: 1rem 0;
+            text-align: center;
+        }
+
+        header h1 {
+            margin: 0;
+            font-size: 2.5rem;
+        }
+
+        nav ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        nav ul li {
+            margin: 0 15px;
+        }
+
+        nav ul li a {
+            color: #fff;
+            text-decoration: none;
+            font-weight: bold;
+            transition: color 0.3s ease;
+            cursor: pointer;
+        }
+
+        nav ul li a:hover {
+            color: #007bff;
+        }
+
+        .search-container {
+            margin-top: 20px;
+            padding: 0 20px;
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+        }
+
+        .search-container input[type="search"] {
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            width: 100%;
+            max-width: 400px;
+            font-size: 1rem;
+        }
+
+        .search-container button {
+            padding: 10px 15px;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 1rem;
+            transition: background-color 0.3s ease;
+        }
+
+        .search-container button:hover {
+            background-color: #0056b3;
+        }
+
+        main {
+            padding: 20px;
+            max-width: 1200px;
+            margin: 20px auto;
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        section {
+            margin-bottom: 40px;
+            padding-bottom: 20px;
+            border-bottom: 1px solid #eee;
+        }
+
+        section:last-child {
+            border-bottom: none;
+        }
+
+        section h2 {
+            color: #007bff;
+            text-align: center;
+            margin-bottom: 25px;
+            font-size: 2rem;
+        }
+
+        .news-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+        }
+
+        .news-item {
+            background-color: #f9f9f9;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            padding: 15px;
+            box-shadow: 0 1px 5px rgba(0, 0, 0, 0.05);
+            display: flex;
+            flex-direction: column;
+        }
+
+        .news-item img {
+            max-width: 97%;
+            height: auto;
+            border-radius: 4px;
+            margin-bottom: 10px;
+            object-fit: cover;
+            max-height: 200px;
+        }
+
+        .news-item h3 {
+            margin-top: 0;
+            color: #333;
+            font-size: 1.3rem;
+        }
+
+        .news-item p {
+            font-size: 0.95rem;
+            color: #666;
+            flex-grow: 1;
+        }
+
+        .news-item a {
+            display: inline-block;
+            margin-top: 10px;
+            color: #007bff;
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+        .news-item a:hover {
+            text-decoration: underline;
+        }
+
+        .loading-message,
+        .error-message {
+            text-align: center;
+            padding: 20px;
+            color: #555;
+            font-style: italic;
+        }
+            
+            .error-message {
+            color: #f44336;
+            font-weight: bold;
+
+        }
+
+        footer {
+            text-align: center;
+            padding: 10px;
+            margin-top: 20px;
+            background-color: #333;
+            color: #fff;
+            font-size: 0.9rem;
+        }
+
+        #backToTopBtn {
+            display: none;
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            z-index: 99;
+            border: none;
+            outline: none;
+            background-color: #007bff;
+            color: white;
+            cursor: pointer;
+            padding: 15px;
+            border-radius: 10px;
+            font-size: 18px;
+            transition: background-color 0.3s ease, opacity 0.3s ease;
+            opacity: 0.8;
+        }
+
+        #backToTopBtn:hover {
+            background-color: #0056b3;
+            opacity: 1;
+        }
+
+        @media (max-width: 400px) {
+            header h1 {
+                font-size: 2rem;
+            }
+
+            nav ul {
+                flex-direction: column;
+            }
+
+            nav ul li {
+                margin: 10px 0;
+            }
+
+            .search-container {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .search-container input[type="search"],
+            .search-container button {
+                max-width: 90%;
+            }
+
+            main {
+                padding: 15px;
+                margin: 15px auto;
+            }
+
+            section h2 {
+                font-size: 1.8rem;
+            }
+
+            .news-container {
+                grid-template-columns: 1fr;
+            }
+
+            #backToTopBtn {
+                bottom: 20px;
+                right: 20px;
+                padding: 12px;
+                font-size: 16px;
+     }
+            .news-item img {
+  width: 100%;
+  height: 200px;
+  object-fit: cover;
+  border-radius: 5px;
+  margin-bottom: 10px;
+}
+
+        }
+    </style>
+</head>
+
+<body>
+    <header>
+        <h1>King David News Hub</h1>
+        <nav>
+    <ul>
+        <li><a onclick="scrollToSection('general-news')">General News</a></li>
+        <li><a onclick="scrollToSection('nigeria-news')">Nigeria News</a></li>
+        <li><a onclick="scrollToSection('sports-news')">Sports Highlights</a></li>
+        <li><a onclick="scrollToSection('Entertement-news')">Entertement Highlights</a></li>
+    </ul>
+</nav>
+
+<script>
+    function scrollToSection(id) {
+        const section = document.getElementById(id);
+        section.scrollIntoView({ behavior: 'smooth' });
+    }
+</script>
+
+        <div class="search-container">
+            <input type="search" id="search-input" placeholder="Search news...">
+            <button id="search-button">Search</button>
+        </div>
+    </header>
+    <main>
+        <section id="general-news">
+            <h2>Latest News</h2>
+            <div class="news-container" id="general-news-container">
+                <p class="loading-message">Loading general news...</p>
+            </div>
+        </section>
+                 <section id="nigeria-news">
+  <h2>Nigeria News</h2>
+  <div class="news-container" id="nigeria-news-container">
+    <p class="loading-message">Loading Nigeria news...</p>
+  </div>
+</section>
+
+        <section id="sports-news">
+            <h2>Sports Highlights</h2>
+            <div class="news-container" id="sports-news-container">
+                <p class="loading-message">Loading sports news...</p>
+            </div>
+        </section>
+             <section id="Entertement-news">
+            <h2>Entertement-news</h2>
+            <div class="news-container" id="Entertement-news-container">
+                <p class="loading-message">Loading Entertement news...</p>
+            </div>
+             </section>
+    </main>
+    <button id="backToTopBtn" onclick="scrollToTop()">↑</button>
+    <footer>
+        <p>&copy; 2025 King News Hub. All rights reserved.</p>
+    </footer>
+    <script>
+        function scrollToSection(id) {
+            const section = document.getElementById(id);
+            section.scrollIntoView({ behavior: 'smooth' });
+        }
+
+        function scrollToTop() {
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        const apiKey = 'pub_265913a0bef94f229fa12a701adc7d65';
+        const generalNewsContainer = document.getElementById('general-news-container');
+        const sportsNewsContainer = document.getElementById('sports-news-container');
+        const searchButton = document.getElementById('search-button');
+        const searchInput = document.getElementById('search-input');
+        const backToTopBtn = document.getElementById('backToTopBtn');
+
+        async function fetchNews(category = '') {
+            const url = `https://newsdata.io/api/1/news?apikey=${apiKey}&q=${category}&language=en`;
+            try {
+                const response = await fetch(url);
+                const data = await response.json();
+                return data.results;
+            } catch (error) {
+                console.error('Error fetching news:', error);
+                return [];
+            }
+        }
+    function renderNews(container, news) {
+  container.innerHTML = '';
+  if (!news || news.length === 0) {
+    container.innerHTML = '<p class="error-message">No news available.</p>';
+    return;
+  }
+
+  // Create a set to store unique article links
+  const articleLinks = new Set();
+
+  news.forEach(article => {
+    // Check if the article link is already in the set
+    if (!articleLinks.has(article.link)) {
+      articleLinks.add(article.link);
+
+      let imageHtml = '';
+      if (article.image_url) {
+        imageHtml = `<img src="${article.image_url}" alt="${article.title}" onerror="this.style.display='none'">`;
+      } else {
+        imageHtml = `<img src="default-image.jpg" alt="Default Image">`;
+      }
+
+      const newsItem = document.createElement('div');
+      newsItem.classList.add('news-item');
+      const pubDate = new Date(article.pubDate);
+      const formattedDate = `${pubDate.toLocaleDateString()} ${pubDate.toLocaleTimeString()}`;
+      newsItem.innerHTML = `
+        ${imageHtml}
+        <h3>${article.title}</h3>
+        <p>Published on ${formattedDate}</p>
+        <p>${article.description}</p>
+        <a href="${article.link}" target="_blank">Read more</a>
+      `;
+      container.appendChild(newsItem);
+    }
+  });
+}
+const nigeriaNewsContainer = document.getElementById('nigeria-news-container');
+
+const EntertementNewsContainer = document.getElementById('Entertement-news-container');
+
+async function loadNews() {
+  const generalNews = await fetchNews('general');
+  const sportsNews = await fetchNews('sports');
+  const nigeriaNews = await fetchNews('nigeria');
+  const EntertementNews = await fetchNews('entertainment'); // changed 'Entertement' to 'entertainment'
+  renderNews(generalNewsContainer, generalNews);
+  renderNews(sportsNewsContainer, sportsNews);
+  renderNews(nigeriaNewsContainer, nigeriaNews);
+  renderNews(EntertementNewsContainer, EntertementNews); // added this line
+}
+
+    searchButton.addEventListener('click', async () => {
+    const query = searchInput.value.trim();
+    if (query) {
+        try {
+            const searchResults = await fetchNews(query);
+            generalNewsContainer.innerHTML = '';
+            sportsNewsContainer.innerHTML = '';
+            if (searchResults.length > 0) {
+                renderNews(generalNewsContainer, searchResults);
+            } else {
+                generalNewsContainer.innerHTML = '<p class="error-message">No results found.</p>';
+            }
+        } catch (error) {
+            console.error('Error fetching news:', error);
+            generalNewsContainer.innerHTML = '<p class="error-message">Error fetching news. Please try again.</p>';
+        }
+    }
+});
+    window.addEventListener('scroll', () => {
+  console.log(window.scrollY);
+  if (window.scrollY > 300) {
+    console.log('Displaying back to top button');
+    backToTopBtn.style.display = 'block';
+  } else {
+    console.log('Hiding back to top button');
+    backToTopBtn.style.display = 'none';
+  }
+});
+
+        loadNews();
+    </script>
+</body>
+</html>
